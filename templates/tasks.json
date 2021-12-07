@@ -1,0 +1,37 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Django: setup django project.",
+      "type": "shell",
+      "command": "${config:python.pythonPath} -m venv env && source env/bin/activate && pip install ${input:django_version} && django-admin startproject ${input:project_name}",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "dedicated",
+        "showReuseMessage": true,
+        "clear": true
+      },
+      "options": {
+        "cwd": "${workspaceFolder}"
+      }
+    }
+  ],
+  "inputs": [
+    {
+      "id": "django_version",
+      "description": "Django version to install. Ex: django==3.1.13",
+      "type": "promptString",
+      "default": "django"
+    },
+    {
+      "id": "project_name",
+      "description": "Django project name.",
+      "type": "promptString",
+      "default": "myDjangoProject"
+    }
+  ]
+}
