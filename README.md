@@ -1,8 +1,8 @@
-# django-helper
+# Django Helper
 
 **Build Django projects happily.**
 
->note: This extension is currently under development.
+> note: This extension is currently under development.
 
 ## Features
 
