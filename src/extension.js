@@ -2,10 +2,12 @@ const fs = require('fs')
 const path = require('path')
 const vscode = require('vscode')
 
+const adminModelFields = require('./admin_models')
+
 /**
  * @param {vscode.ExtensionContext} context
  */
-function activate(context) {
+function activate(context){
 
 	console.log('Congratulations, extension "django-helper" is now activated!')
 
@@ -18,7 +20,6 @@ function activate(context) {
 		const extensionTemplatesPath = path.join(extensionPath, "templates")
 		
 		const EXT_TEMPLATE_FILES = ["tasks.json", "test.txt", "test2.txt"]
-
 
 
 		//check if workspace folder is opened or not.
@@ -37,10 +38,9 @@ function activate(context) {
 			vscode.window.showInformationMessage(`${dotvscodePath} already exists.`, ...["Ok"])
 		}
 
-
 		/*
-		check if setup files are exists or not in .vscode/ directory.
-		if not then, create the setup files in .vscode/ directory.
+		check if setup files are exists or not in .vscode directory.
+		if not then, create the setup files in .vscode directory.
 		*/
 		EXT_TEMPLATE_FILES.forEach((filename) => {
 			
@@ -56,6 +56,8 @@ function activate(context) {
 		})
 
 	})
+
+	adminModelFields.adminModel()
 
 	context.subscriptions.push(setup_vscode_for_django_command)
 }
