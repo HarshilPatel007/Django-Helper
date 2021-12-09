@@ -39,12 +39,16 @@
   "contributes": {
     "commands": [
       {
-        "command": "django-helper.setupVSCodeForDjangoProject",
-        "title": "setup vscode for django project"
+        "command": "django-helper.setup_editor_for_django_project",
+        "title": "setup editor for django project"
       },
       {
         "command": "django-helper.admin_register_all_models",
         "title": "register all models in admin.py"
+      },
+      {
+        "command": "django-helper.admin_register_selected_model",
+        "title": "register selected model in admin.py"
       }
     ],
     "menus": {
@@ -52,6 +56,11 @@
         {
           "when": "resourceLangId == python",
           "command": "django-helper.admin_register_all_models",
+          "group": "navigation"
+        },
+        {
+          "when": "resourceLangId == python",
+          "command": "django-helper.admin_register_selected_model",
           "group": "navigation"
         }
       ]

@@ -6,13 +6,19 @@
 
 ## Features
 
-- Setup VSCode for Django Project.
+- Setup Editor for Django Project.
+
   - `ctrl+shift+p` to open command pallete.
-  - type `setup vscode for django project` and hit enter.
+  - type `setup editor for django project` and hit enter.
   - this'll setup the Django tasks and other configuration for the extension.
+
 - Django Tasks.
+
   - `Django: setup django project`
     - this'll setup the django project.
+
+- Register all models in `admin.py`
+- Register selected model in `admin.py`
 
 ## Requirements
 
