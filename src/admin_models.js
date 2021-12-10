@@ -62,9 +62,11 @@ class ${class_name}Admin(admin.ModelAdmin):
                                 })
                             }
                         })
+                    } else {
+                        return vscode.window.showErrorMessage("Model Import statement doesn't defined.", ...["Ok"])
                     }
                 } else {
-                    return vscode.window.showErrorMessage("This action can only performed in admin.py.")
+                    return vscode.window.showErrorMessage("This action can only performed in admin.py.", ...["Ok"])
                 }
             }
         )
@@ -81,16 +83,20 @@ class ${class_name}Admin(admin.ModelAdmin):
 
                 if (isAdminFile()) {
                     if (class_name) {
-                        let lineCount = editor.document.lineCount
-                        let position = new vscode.Position(lineCount, 0)
-                        editor.edit(editBuilder => {
-                            editBuilder.insert(position, registerSelectedModel(class_name))
-                        })
+                        if (class_name.startsWith(class_name[0].toUpperCase())) { //class_name[0] === class_name[0].toUpperCase()
+                            let lineCount = editor.document.lineCount
+                            let position = new vscode.Position(lineCount, 0)
+                            editor.edit(editBuilder => {
+                                editBuilder.insert(position, registerSelectedModel(class_name))
+                            })
+                        } else {
+                            return vscode.window.showErrorMessage("Class should be start with uppercase.", ...["Ok"])
+                        }
                     } else {
-                        return vscode.window.showErrorMessage("Please select Model Class first.")
+                        return vscode.window.showInformationMessage("Please select model class first.", ...["Ok"])
                     }
                 } else {
-                    return vscode.window.showErrorMessage("This action can only performed in admin.py.")
+                    return vscode.window.showErrorMessage("This action can only performed in admin.py.", ...["Ok"])
                 }
             }
         )
