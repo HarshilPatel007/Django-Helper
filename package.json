@@ -56,12 +56,12 @@
         {
           "when": "resourceLangId == python",
           "command": "django-helper.admin_register_all_models",
-          "group": "navigation"
+          "group": "navigation@1"
         },
         {
           "when": "resourceLangId == python",
           "command": "django-helper.admin_register_selected_model",
-          "group": "navigation"
+          "group": "navigation@2"
         }
       ]
     }
