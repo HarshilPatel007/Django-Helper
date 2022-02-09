@@ -2,8 +2,6 @@
 
 **Build Django projects happily.**
 
-> note: This extension is currently under development.
-
 ## Features
 
 - Setup Editor for Django Project.
@@ -30,14 +28,17 @@
 
 ## Known Issues
 
-- `setup django project` task is only supported in Linux & MacOS.
-- Support for Windows is not planned.
+- `setup django project` task is only supported in Linux & MacOS. Not tested in the Windows.
 
 ## Release Notes
 
 ### 0.0.1
 
 - Initial release.
+
+### 0.0.2
+
+- Remove unnessesory files and change README.
 
 ---
 
