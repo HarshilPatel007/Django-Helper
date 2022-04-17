@@ -14,7 +14,7 @@ function setupEditor() {
             const dotvscodePath = path.join(workspaceFolder, ".vscode")
             const extensionTemplatesPath = path.join(extensionPath, "templates")
 
-            const EXT_TEMPLATE_FILES = ["tasks.json", "test.txt", "test2.txt"]
+            const EXT_TEMPLATE_FILES = ["tasks.json"]
 
 
             //check if workspace folder is opened or not.

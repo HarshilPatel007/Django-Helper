@@ -19,7 +19,8 @@ function adminModel() {
 class ${class_name}Admin(admin.ModelAdmin):
     class Meta:
         model = ${class_name}
-        fields = '__all__'\n\n`
+        fields = '__all__'
+        # exclude = ['fields_to_exclude']\n\n`
 
         return code
     }
@@ -30,7 +31,8 @@ class ${class_name}Admin(admin.ModelAdmin):
 class ${class_name}Admin(admin.ModelAdmin):
     class Meta:
         model = ${class_name}
-        fields = '__all__'\n\n`
+        fields = '__all__'
+        # exclude = ['fields_to_exclude']\n\n`
 
         return code
     }
