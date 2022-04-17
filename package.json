@@ -44,22 +44,24 @@
       },
       {
         "command": "django-helper.admin_register_all_models",
-        "title": "register all models in admin.py"
+        "title": "register all models in admin.py",
+        "when": "resourceLangId == python && resourceFilename == admin.py"
       },
       {
         "command": "django-helper.admin_register_selected_model",
-        "title": "register selected model in admin.py"
+        "title": "register selected model in admin.py",
+        "when": "resourceLangId == python && resourceFilename == admin.py"
       }
     ],
     "menus": {
       "editor/context": [
         {
-          "when": "resourceLangId == python",
+          "when": "resourceLangId == python && resourceFilename == admin.py",
           "command": "django-helper.admin_register_all_models",
           "group": "navigation@1"
         },
         {
-          "when": "resourceLangId == python",
+          "when": "resourceLangId == python && resourceFilename == admin.py",
           "command": "django-helper.admin_register_selected_model",
           "group": "navigation@2"
         }
