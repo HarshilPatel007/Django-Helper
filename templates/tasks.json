@@ -7,13 +7,14 @@
       "label": "Django: setup django project.",
       "type": "shell",
       "command": "${config:python.pythonPath} -m venv env && source env/bin/activate && pip install ${input:django_version} && django-admin startproject ${input:project_name}",
+      "when": "isLinux || isMac"
       "presentation": {
         "echo": true,
         "reveal": "always",
         "focus": true,
         "panel": "dedicated",
         "showReuseMessage": true,
-        "clear": true
+        "clear": true,
       },
       "options": {
         "cwd": "${workspaceFolder}"
