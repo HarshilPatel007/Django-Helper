@@ -1,7 +1,7 @@
-const vscode = require('vscode')
+import * as vscode from 'vscode'
 
 
-function adminModel() {
+export function adminModel() {
     let isAdminFile = function () {
         let currentFilePath = vscode.window.activeTextEditor.document.fileName
         currentFilePath = currentFilePath.split("/")
@@ -9,8 +9,11 @@ function adminModel() {
         if (currentFilePath == "admin.py") return true
     }
 
-    let hasModelsImports = function (fileText) {
-        if (fileText.indexOf("from .models import") > 0) return true
+    let hasModelsImports = (fileText) => {
+        let searchImport = new RegExp(`(?:^|\w*)from .models import(?:$|\w*)`)
+        if (searchImport.test(fileText) == true) {
+            return true
+        }
     }
 
     let registerAllModels = function (class_name) {
@@ -43,13 +46,13 @@ class ${class_name}Admin(admin.ModelAdmin):
             "django-helper.admin_register_all_models",
             function () {
                 let editor = vscode.window.activeTextEditor
-                let fileText = editor.document.getText()
+                let fileText = editor.document.lineAt(editor.selection.active.line)
                 let codeToInject = ""
                 let modelString = ""
 
                 if (isAdminFile()) {
-                    if (hasModelsImports(fileText)) {
-                        fileText.splitLines().forEach((e) => {
+                    if (hasModelsImports(fileText["_text"]) == true) {
+                        fileText["_text"].splitLines().forEach((e) => {
                             if (e.indexOf(".models") > 0) {
                                 let indexOfImport = e.indexOf("import") + 7
                                 modelString = e.substring(indexOfImport, e.length)
@@ -65,10 +68,10 @@ class ${class_name}Admin(admin.ModelAdmin):
                             }
                         })
                     } else {
-                        return vscode.window.showErrorMessage("Model Import statement doesn't defined.", ...["Ok"])
+                        return vscode.window.showErrorMessage("Place cursor at the model import statement", ...["Ok"])
                     }
                 } else {
-                    return vscode.window.showErrorMessage("This action can only performed in admin.py.", ...["Ok"])
+                    return vscode.window.showErrorMessage("This action can only performed in admin.py", ...["Ok"])
                 }
             }
         )
@@ -92,13 +95,13 @@ class ${class_name}Admin(admin.ModelAdmin):
                                 editBuilder.insert(position, registerSelectedModel(class_name))
                             })
                         } else {
-                            return vscode.window.showErrorMessage("Class should be start with uppercase.", ...["Ok"])
+                            return vscode.window.showErrorMessage("Class should be start with uppercase", ...["Ok"])
                         }
                     } else {
-                        return vscode.window.showInformationMessage("Please select model class first.", ...["Ok"])
+                        return vscode.window.showInformationMessage("Please select model class first", ...["Ok"])
                     }
                 } else {
-                    return vscode.window.showErrorMessage("This action can only performed in admin.py.", ...["Ok"])
+                    return vscode.window.showErrorMessage("This action can only performed in admin.py", ...["Ok"])
                 }
             }
         )
@@ -108,8 +111,3 @@ class ${class_name}Admin(admin.ModelAdmin):
     register_selected_model_command()
 
 } // adminModel
-
-
-module.exports = {
-    adminModel: adminModel
-}

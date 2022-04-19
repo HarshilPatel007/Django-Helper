@@ -1,25 +1,20 @@
-const setupEditor = require('./setup_editor')
-const adminModelFields = require('./admin_models')
+import { setupEditor as _setupEditor } from './setup_editor'
+import { adminModel } from './admin_models'
 
 /**
  * @param {vscode.ExtensionContext} context
  */
-function activate(context) {
+export function activate(context) {
 
 	console.log('Congratulations, extension "django-helper" is now activated!')
 
 	let django_helper = () => console.log("")
 
-	setupEditor.setupEditor()
-	adminModelFields.adminModel()
+	_setupEditor()
+	adminModel()
 
 	context.subscriptions.push(django_helper)
 }
 
 // this method is called when your extension is deactivated
-function deactivate() { }
-
-module.exports = {
-	activate,
-	deactivate
-}
+export function deactivate() { }

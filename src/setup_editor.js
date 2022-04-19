@@ -1,9 +1,9 @@
-const fs = require('fs')
-const path = require('path')
-const vscode = require('vscode')
+import { existsSync, mkdirSync, copyFileSync, constants } from 'fs'
+import { join } from 'path'
+import * as vscode from 'vscode'
 
 
-function setupEditor() {
+export function setupEditor() {
     let setup_editor_for_django_command = function () {
 
         vscode.commands.registerCommand('django-helper.setup_editor_for_django_project', function () {
@@ -11,8 +11,8 @@ function setupEditor() {
             let workspaceFolder = vscode.workspace.workspaceFolders[0].uri.fsPath
             let extensionPath = vscode.extensions.getExtension('harshil patel.django-helper').extensionPath
 
-            const dotvscodePath = path.join(workspaceFolder, ".vscode")
-            const extensionTemplatesPath = path.join(extensionPath, "templates")
+            const dotvscodePath = join(workspaceFolder, ".vscode")
+            const extensionTemplatesPath = join(extensionPath, "templates")
 
             const EXT_TEMPLATE_FILES = ["tasks.json"]
 
@@ -23,8 +23,8 @@ function setupEditor() {
                 check if .vscode directory is exists or not.
                 if not then, create .vscode directory.
                 */
-                if (!fs.existsSync(dotvscodePath)) {
-                    fs.mkdirSync(dotvscodePath)
+                if (!existsSync(dotvscodePath)) {
+                    mkdirSync(dotvscodePath)
                     vscode.window.showInformationMessage(`${dotvscodePath} has been created.`, ...["Ok"])
                 } else {
                     return vscode.window.showInformationMessage(`${dotvscodePath} already exists.`, ...["Ok"])
@@ -39,11 +39,11 @@ function setupEditor() {
             */
             EXT_TEMPLATE_FILES.forEach((filename) => {
 
-                const extensionTemplateFilePath = path.join(extensionTemplatesPath, filename)
-                const vscodeTemplateFilePath = path.join(dotvscodePath, filename)
+                const extensionTemplateFilePath = join(extensionTemplatesPath, filename)
+                const vscodeTemplateFilePath = join(dotvscodePath, filename)
 
-                if (!fs.existsSync(vscodeTemplateFilePath)) {
-                    fs.copyFileSync(extensionTemplateFilePath, vscodeTemplateFilePath, fs.constants.COPYFILE_EXCL)
+                if (!existsSync(vscodeTemplateFilePath)) {
+                    copyFileSync(extensionTemplateFilePath, vscodeTemplateFilePath, constants.COPYFILE_EXCL)
                     vscode.window.showInformationMessage(`${vscodeTemplateFilePath} created.`, ...["Ok"])
                 } else {
                     return vscode.window.showInformationMessage(`${vscodeTemplateFilePath} already exists.`, ...["Ok"])
@@ -57,7 +57,3 @@ function setupEditor() {
     setup_editor_for_django_command()
 
 } // setupEditor
-
-module.exports = {
-    setupEditor: setupEditor
-}
