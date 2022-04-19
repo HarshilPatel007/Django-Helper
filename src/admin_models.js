@@ -1,7 +1,6 @@
-import * as vscode from 'vscode'
+const vscode = require('vscode')
 
-
-export function adminModel() {
+function adminModel() {
     let isAdminFile = function () {
         let currentFilePath = vscode.window.activeTextEditor.document.fileName
         currentFilePath = currentFilePath.split("/")
@@ -111,3 +110,7 @@ class ${class_name}Admin(admin.ModelAdmin):
     register_selected_model_command()
 
 } // adminModel
+
+module.exports = {
+    adminModel: adminModel
+}
