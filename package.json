@@ -44,12 +44,12 @@
       },
       {
         "command": "django-helper.admin_register_all_models",
-        "title": "register all models in admin.py",
+        "title": "Register all models",
         "when": "resourceLangId == python && resourceFilename == admin.py"
       },
       {
-        "command": "django-helper.admin_register_selected_model",
-        "title": "register selected model in admin.py",
+        "command": "django-helper.admin_register_selected_models",
+        "title": "Register selected models",
         "when": "resourceLangId == python && resourceFilename == admin.py"
       }
     ],
@@ -62,7 +62,7 @@
         },
         {
           "when": "resourceLangId == python && resourceFilename == admin.py",
-          "command": "django-helper.admin_register_selected_model",
+          "command": "django-helper.admin_register_selected_models",
           "group": "navigation@2"
         }
       ]

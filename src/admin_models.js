@@ -1,7 +1,7 @@
 const vscode = require('vscode')
 
 function adminModel() {
-    let isAdminFile = function () {
+    let isAdminFile = () => {
         let currentFilePath = vscode.window.activeTextEditor.document.fileName
         currentFilePath = currentFilePath.split("/")
         currentFilePath = currentFilePath[currentFilePath.length - 1]
@@ -15,7 +15,7 @@ function adminModel() {
         }
     }
 
-    let registerAllModels = function (class_name) {
+    let registerModels = (class_name) => {
         let code = `
 @admin.register(${class_name})
 class ${class_name}Admin(admin.ModelAdmin):
@@ -27,19 +27,7 @@ class ${class_name}Admin(admin.ModelAdmin):
         return code
     }
 
-    let registerSelectedModel = function (class_name) {
-        let code = `
-@admin.register(${class_name})
-class ${class_name}Admin(admin.ModelAdmin):
-    class Meta:
-        model = ${class_name}
-        fields = '__all__'
-        # exclude = ['fields_to_exclude']\n\n`
-
-        return code
-    }
-
-    let register_all_models_command = function () {
+    let register_all_models_command = () => {
 
         vscode.commands.registerCommand(
             "django-helper.admin_register_all_models",
@@ -57,7 +45,7 @@ class ${class_name}Admin(admin.ModelAdmin):
                                 modelString = e.substring(indexOfImport, e.length)
                                 modelString = modelString.replace(/,+/g, "").split(" ")
                                 modelString.forEach((model) => {
-                                    codeToInject += registerAllModels(model)
+                                    codeToInject += registerModels(model)
                                 })
                                 let lineCount = editor.document.lineCount
                                 let position = new vscode.Position(lineCount, 0)
@@ -76,35 +64,45 @@ class ${class_name}Admin(admin.ModelAdmin):
         )
     } // register_all_models_command
 
-    let register_selected_model_command = function () {
+    let register_selected_model_command = () => {
 
         vscode.commands.registerCommand(
-            "django-helper.admin_register_selected_model",
+            "django-helper.admin_register_selected_models",
             function () {
                 let editor = vscode.window.activeTextEditor
                 let selection = editor.selection
                 let class_name = editor.document.getText(selection)
+                let codeToInject = ""
+                let modelString = ""
 
                 if (isAdminFile()) {
-                    if (class_name) {
-                        if (class_name.startsWith(class_name[0].toUpperCase())) { //class_name[0] === class_name[0].toUpperCase()
-                            let lineCount = editor.document.lineCount
-                            let position = new vscode.Position(lineCount, 0)
-                            editor.edit(editBuilder => {
-                                editBuilder.insert(position, registerSelectedModel(class_name))
-                            })
-                        } else {
-                            return vscode.window.showErrorMessage("Class should be start with uppercase", ...["Ok"])
-                        }
+                    if (class_name.includes(",")) {
+                        modelString = class_name.split(",")
+                        modelString.forEach(classes => {
+                            let class_name = classes.replace(/\s+/g, "").replace(",", "")
+                            codeToInject += registerModels(class_name)
+                        })
+                        let lineCount = editor.document.lineCount
+                        let position = new vscode.Position(lineCount, 0)
+                        editor.edit(editBuilder => {
+                            editBuilder.insert(position, codeToInject)
+                            console.log(editBuilder)
+                        })
                     } else {
-                        return vscode.window.showInformationMessage("Please select model class first", ...["Ok"])
+                        codeToInject = registerModels(class_name)
+                        let lineCount = editor.document.lineCount
+                        let position = new vscode.Position(lineCount, 0)
+                        editor.edit(editBuilder => {
+                            editBuilder.insert(position, codeToInject)
+                            console.log(editBuilder)
+                        })
                     }
                 } else {
                     return vscode.window.showErrorMessage("This action can only performed in admin.py", ...["Ok"])
                 }
             }
         )
-    } // register_selected_model_command
+    } // register_selected_models_command
 
     register_all_models_command()
     register_selected_model_command()
