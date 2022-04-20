@@ -30,8 +30,7 @@ class ${class_name}Admin(admin.ModelAdmin):
     let register_all_models_command = () => {
 
         vscode.commands.registerCommand(
-            "django-helper.admin_register_all_models",
-            function () {
+            "django-helper.admin_register_all_models", () => {
                 let editor = vscode.window.activeTextEditor
                 let fileText = editor.document.lineAt(editor.selection.active.line)
                 let codeToInject = ""
@@ -67,8 +66,7 @@ class ${class_name}Admin(admin.ModelAdmin):
     let register_selected_model_command = () => {
 
         vscode.commands.registerCommand(
-            "django-helper.admin_register_selected_models",
-            function () {
+            "django-helper.admin_register_selected_models", () => {
                 let editor = vscode.window.activeTextEditor
                 let selection = editor.selection
                 let class_name = editor.document.getText(selection)
@@ -76,26 +74,28 @@ class ${class_name}Admin(admin.ModelAdmin):
                 let modelString = ""
 
                 if (isAdminFile()) {
-                    if (class_name.includes(",")) {
-                        modelString = class_name.split(",")
-                        modelString.forEach(classes => {
-                            let class_name = classes.replace(/\s+/g, "").replace(",", "")
-                            codeToInject += registerModels(class_name)
-                        })
-                        let lineCount = editor.document.lineCount
-                        let position = new vscode.Position(lineCount, 0)
-                        editor.edit(editBuilder => {
-                            editBuilder.insert(position, codeToInject)
-                            console.log(editBuilder)
-                        })
+                    if (class_name) {
+                        if (class_name.includes(",")) {
+                            modelString = class_name.split(",")
+                            modelString.forEach(classes => {
+                                let class_name = classes.replace(/\s+/g, "").replace(",", "")
+                                codeToInject += registerModels(class_name)
+                            })
+                            let lineCount = editor.document.lineCount
+                            let position = new vscode.Position(lineCount, 0)
+                            editor.edit(editBuilder => {
+                                editBuilder.insert(position, codeToInject)
+                            })
+                        } else {
+                            codeToInject = registerModels(class_name)
+                            let lineCount = editor.document.lineCount
+                            let position = new vscode.Position(lineCount, 0)
+                            editor.edit(editBuilder => {
+                                editBuilder.insert(position, codeToInject)
+                            })
+                        }
                     } else {
-                        codeToInject = registerModels(class_name)
-                        let lineCount = editor.document.lineCount
-                        let position = new vscode.Position(lineCount, 0)
-                        editor.edit(editBuilder => {
-                            editBuilder.insert(position, codeToInject)
-                            console.log(editBuilder)
-                        })
+                        return vscode.window.showErrorMessage("Please select model class first", ...["Ok"])
                     }
                 } else {
                     return vscode.window.showErrorMessage("This action can only performed in admin.py", ...["Ok"])

@@ -13,6 +13,10 @@
     "type": "git",
     "url": "https://github.com/HarshilPatel007/Django-Helper.git"
   },
+  "homepage": "https://github.com/HarshilPatel007/Django-Helper/blob/master/README.md",
+  "bugs": {
+    "url": "https://github.com/HarshilPatel007/Django-Helper/issues"
+  },
   "readme": "./README.md",
   "engines": {
     "vscode": "^1.62.0"
@@ -40,33 +44,47 @@
     "commands": [
       {
         "command": "django-helper.setup_editor_for_django_project",
-        "title": "setup editor for django project"
+        "title": "setup editor for django project",
+        "category": "Django-Helper"
       },
       {
         "command": "django-helper.admin_register_all_models",
         "title": "Register all models",
-        "when": "resourceLangId == python && resourceFilename == admin.py"
+        "when": "resourceLangId == python && resourceFilename == admin.py",
+        "category": "Django-Helper"
       },
       {
         "command": "django-helper.admin_register_selected_models",
         "title": "Register selected models",
-        "when": "resourceLangId == python && resourceFilename == admin.py"
+        "when": "resourceLangId == python && resourceFilename == admin.py",
+        "category": "Django-Helper"
       }
     ],
     "menus": {
       "editor/context": [
         {
-          "when": "resourceLangId == python && resourceFilename == admin.py",
-          "command": "django-helper.admin_register_all_models",
+          "when": "resourceLangId == python",
+          "submenu": "django-helper",
           "group": "navigation@1"
+        }
+      ],
+      "django-helper": [
+        {
+          "when": "resourceLangId == python && resourceFilename == admin.py",
+          "command": "django-helper.admin_register_all_models"
         },
         {
           "when": "resourceLangId == python && resourceFilename == admin.py",
-          "command": "django-helper.admin_register_selected_models",
-          "group": "navigation@2"
+          "command": "django-helper.admin_register_selected_models"
         }
       ]
-    }
+    },
+    "submenus": [
+      {
+        "id": "django-helper",
+        "label": "Django-Helper"
+      }
+    ]
   },
   "scripts": {
     "lint": "eslint .",
