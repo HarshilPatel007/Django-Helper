@@ -1,5 +1,6 @@
 const setupEditor = require('./setup_editor')
 const adminModelFields = require('./admin_models')
+const serializers = require('./serializers')
 
 /**
  * @param {vscode.ExtensionContext} context
@@ -12,6 +13,7 @@ function activate(context) {
 
 	setupEditor.setupEditor()
 	adminModelFields.adminModel()
+	serializers.serializers()
 
 	context.subscriptions.push(djangoHelper)
 }

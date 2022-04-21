@@ -106,22 +106,8 @@ class ${className}Admin(admin.ModelAdmin):
         )
     } // register_selected_models_command
 
-
-    let get_model_class = () => {
-        vscode.commands.registerCommand(
-            'sssss', (selectedDirPath => {
-                vscode.commands.executeCommand('copyFilePath')
-                vscode.env.clipboard.readText().then((clipboardText) => {
-                    selectedDirPath = clipboardText
-                    console.log(selectedDirPath)
-                })
-            })
-        )
-    }
-
     registerAllModelsCommand()
     registerSelectedModelsCommand()
-    get_model_class()
 
 } // adminModel
 

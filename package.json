@@ -2,7 +2,7 @@
   "name": "django-helper",
   "displayName": "Django Helper",
   "description": "Build Django projects happily.",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "author": {
     "name": "Harshil Patel",
     "url": "https://github.com/HarshilPatel007"
@@ -60,19 +60,28 @@
         "category": "Django-Helper"
       },
       {
-        "command": "sssss",
-        "title": "Get selected folders path"
+        "command": "django-helper.create_serializers",
+        "title": "Create Serializers",
+        "when": "explorerViewletVisible && explorerResourceIsFolder",
+        "category": "Django-Helper"
       }
     ],
     "menus": {
       "editor/context": [
         {
           "when": "resourceLangId == python",
-          "submenu": "django-helper",
+          "submenu": "admin-models",
           "group": "navigation@1"
         }
       ],
-      "django-helper": [
+      "explorer/context": [
+        {
+          "when": "explorerViewletVisible && explorerResourceIsFolder",
+          "submenu": "serializers",
+          "group": "navigation@1"
+        }
+      ],
+      "admin-models": [
         {
           "when": "resourceLangId == python && resourceFilename == admin.py",
           "command": "django-helper.admin_register_all_models"
@@ -82,16 +91,20 @@
           "command": "django-helper.admin_register_selected_models"
         }
       ],
-      "explorer/context": [
+      "serializers": [
         {
-          "when": "explorerViewletVisible",
-          "command": "sssss"
+          "when": "explorerViewletVisible && explorerResourceIsFolder",
+          "command": "django-helper.create_serializers"
         }
       ]
     },
     "submenus": [
       {
-        "id": "django-helper",
+        "id": "admin-models",
+        "label": "Django-Helper"
+      },
+      {
+        "id": "serializers",
         "label": "Django-Helper"
       }
     ]
