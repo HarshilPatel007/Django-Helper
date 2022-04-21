@@ -8,12 +8,12 @@ function activate(context) {
 
 	console.log('Congratulations, extension "django-helper" is now activated!')
 
-	let django_helper = () => console.log("")
+	let djangoHelper = () => console.log("")
 
 	setupEditor.setupEditor()
 	adminModelFields.adminModel()
 
-	context.subscriptions.push(django_helper)
+	context.subscriptions.push(djangoHelper)
 }
 
 // this method is called when your extension is deactivated

@@ -58,6 +58,10 @@
         "title": "Register selected models",
         "when": "resourceLangId == python && resourceFilename == admin.py",
         "category": "Django-Helper"
+      },
+      {
+        "command": "sssss",
+        "title": "Get selected folders path"
       }
     ],
     "menus": {
@@ -76,6 +80,12 @@
         {
           "when": "resourceLangId == python && resourceFilename == admin.py",
           "command": "django-helper.admin_register_selected_models"
+        }
+      ],
+      "explorer/context": [
+        {
+          "when": "explorerViewletVisible",
+          "command": "sssss"
         }
       ]
     },

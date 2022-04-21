@@ -1,3 +1,5 @@
+const fs = require('fs')
+const path = require('path')
 const vscode = require('vscode')
 
 function adminModel() {
@@ -5,29 +7,29 @@ function adminModel() {
         let currentFilePath = vscode.window.activeTextEditor.document.fileName
         currentFilePath = currentFilePath.split("/")
         currentFilePath = currentFilePath[currentFilePath.length - 1]
-        if (currentFilePath == "admin.py") return true
+        if (currentFilePath === "admin.py") return true
     }
 
     let hasModelsImports = (fileText) => {
         let searchImport = new RegExp(`(?:^|\w*)from .models import(?:$|\w*)`)
-        if (searchImport.test(fileText) == true) {
+        if (searchImport.test(fileText) === true) {
             return true
         }
     }
 
-    let registerModels = (class_name) => {
+    let registerModels = (className) => {
         let code = `
-@admin.register(${class_name})
-class ${class_name}Admin(admin.ModelAdmin):
+@admin.register(${className})
+class ${className}Admin(admin.ModelAdmin):
     class Meta:
-        model = ${class_name}
+        model = ${className}
         fields = '__all__'
         # exclude = ['fields_to_exclude']\n\n`
 
         return code
     }
 
-    let register_all_models_command = () => {
+    let registerAllModelsCommand = () => {
 
         vscode.commands.registerCommand(
             "django-helper.admin_register_all_models", () => {
@@ -37,7 +39,7 @@ class ${class_name}Admin(admin.ModelAdmin):
                 let modelString = ""
 
                 if (isAdminFile()) {
-                    if (hasModelsImports(fileText["_text"]) == true) {
+                    if (hasModelsImports(fileText["_text"]) === true) {
                         fileText["_text"].splitLines().forEach((e) => {
                             if (e.indexOf(".models") > 0) {
                                 let indexOfImport = e.indexOf("import") + 7
@@ -63,23 +65,23 @@ class ${class_name}Admin(admin.ModelAdmin):
         )
     } // register_all_models_command
 
-    let register_selected_model_command = () => {
+    let registerSelectedModelsCommand = () => {
 
         vscode.commands.registerCommand(
             "django-helper.admin_register_selected_models", () => {
                 let editor = vscode.window.activeTextEditor
                 let selection = editor.selection
-                let class_name = editor.document.getText(selection)
+                let className = editor.document.getText(selection)
                 let codeToInject = ""
                 let modelString = ""
 
                 if (isAdminFile()) {
-                    if (class_name) {
-                        if (class_name.includes(",")) {
-                            modelString = class_name.split(",")
+                    if (className) {
+                        if (className.includes(",")) {
+                            modelString = className.split(",")
                             modelString.forEach(classes => {
-                                let class_name = classes.replace(/\s+/g, "").replace(",", "")
-                                codeToInject += registerModels(class_name)
+                                let className = classes.replace(/\s+/g, "").replace(",", "")
+                                codeToInject += registerModels(className)
                             })
                             let lineCount = editor.document.lineCount
                             let position = new vscode.Position(lineCount, 0)
@@ -87,7 +89,7 @@ class ${class_name}Admin(admin.ModelAdmin):
                                 editBuilder.insert(position, codeToInject)
                             })
                         } else {
-                            codeToInject = registerModels(class_name)
+                            codeToInject = registerModels(className)
                             let lineCount = editor.document.lineCount
                             let position = new vscode.Position(lineCount, 0)
                             editor.edit(editBuilder => {
@@ -104,8 +106,22 @@ class ${class_name}Admin(admin.ModelAdmin):
         )
     } // register_selected_models_command
 
-    register_all_models_command()
-    register_selected_model_command()
+
+    let get_model_class = () => {
+        vscode.commands.registerCommand(
+            "sssss", (selectedDirPath => {
+                vscode.commands.executeCommand('copyFilePath')
+                vscode.env.clipboard.readText().then((clipboardText) => {
+                    selectedDirPath = clipboardText
+                    console.log(selectedDirPath)
+                })
+            })
+        )
+    }
+
+    registerAllModelsCommand()
+    registerSelectedModelsCommand()
+    get_model_class()
 
 } // adminModel
 
