@@ -8,7 +8,7 @@ function activate(context) {
 
 	console.log('Congratulations, extension "django-helper" is now activated!')
 
-	let djangoHelper = () => console.log("")
+	let djangoHelper = () => console.log('')
 
 	setupEditor.setupEditor()
 	adminModelFields.adminModel()

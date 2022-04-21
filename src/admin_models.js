@@ -5,9 +5,9 @@ const vscode = require('vscode')
 function adminModel() {
     let isAdminFile = () => {
         let currentFilePath = vscode.window.activeTextEditor.document.fileName
-        currentFilePath = currentFilePath.split("/")
+        currentFilePath = currentFilePath.split('/')
         currentFilePath = currentFilePath[currentFilePath.length - 1]
-        if (currentFilePath === "admin.py") return true
+        if (currentFilePath === 'admin.py') return true
     }
 
     let hasModelsImports = (fileText) => {
@@ -23,8 +23,8 @@ function adminModel() {
 class ${className}Admin(admin.ModelAdmin):
     class Meta:
         model = ${className}
-        fields = '__all__'
-        # exclude = ['fields_to_exclude']\n\n`
+        fields = "__all__"
+        # exclude = ["fields_to_exclude"]\n\n`
 
         return code
     }
@@ -32,19 +32,19 @@ class ${className}Admin(admin.ModelAdmin):
     let registerAllModelsCommand = () => {
 
         vscode.commands.registerCommand(
-            "django-helper.admin_register_all_models", () => {
+            'django-helper.admin_register_all_models', () => {
                 let editor = vscode.window.activeTextEditor
                 let fileText = editor.document.lineAt(editor.selection.active.line)
-                let codeToInject = ""
-                let modelString = ""
+                let codeToInject = ''
+                let modelString = ''
 
                 if (isAdminFile()) {
-                    if (hasModelsImports(fileText["_text"]) === true) {
-                        fileText["_text"].splitLines().forEach((e) => {
-                            if (e.indexOf(".models") > 0) {
-                                let indexOfImport = e.indexOf("import") + 7
+                    if (hasModelsImports(fileText['_text']) === true) {
+                        fileText['_text'].splitLines().forEach((e) => {
+                            if (e.indexOf('.models') > 0) {
+                                let indexOfImport = e.indexOf('import') + 7
                                 modelString = e.substring(indexOfImport, e.length)
-                                modelString = modelString.replace(/,+/g, "").split(" ")
+                                modelString = modelString.replace(/,+/g, '').split(' ')
                                 modelString.forEach((model) => {
                                     codeToInject += registerModels(model)
                                 })
@@ -56,10 +56,10 @@ class ${className}Admin(admin.ModelAdmin):
                             }
                         })
                     } else {
-                        return vscode.window.showErrorMessage("Place cursor at the model import statement", ...["Ok"])
+                        return vscode.window.showErrorMessage('Place cursor at the model import statement', ...['Ok'])
                     }
                 } else {
-                    return vscode.window.showErrorMessage("This action can only performed in admin.py", ...["Ok"])
+                    return vscode.window.showErrorMessage('This action can only performed in admin.py', ...['Ok'])
                 }
             }
         )
@@ -68,19 +68,19 @@ class ${className}Admin(admin.ModelAdmin):
     let registerSelectedModelsCommand = () => {
 
         vscode.commands.registerCommand(
-            "django-helper.admin_register_selected_models", () => {
+            'django-helper.admin_register_selected_models', () => {
                 let editor = vscode.window.activeTextEditor
                 let selection = editor.selection
                 let className = editor.document.getText(selection)
-                let codeToInject = ""
-                let modelString = ""
+                let codeToInject = ''
+                let modelString = ''
 
                 if (isAdminFile()) {
                     if (className) {
-                        if (className.includes(",")) {
-                            modelString = className.split(",")
+                        if (className.includes(',')) {
+                            modelString = className.split(',')
                             modelString.forEach(classes => {
-                                let className = classes.replace(/\s+/g, "").replace(",", "")
+                                let className = classes.replace(/\s+/g, '').replace(',', '')
                                 codeToInject += registerModels(className)
                             })
                             let lineCount = editor.document.lineCount
@@ -97,10 +97,10 @@ class ${className}Admin(admin.ModelAdmin):
                             })
                         }
                     } else {
-                        return vscode.window.showErrorMessage("Please select model class first", ...["Ok"])
+                        return vscode.window.showErrorMessage('Please select model class first', ...['Ok'])
                     }
                 } else {
-                    return vscode.window.showErrorMessage("This action can only performed in admin.py", ...["Ok"])
+                    return vscode.window.showErrorMessage('This action can only performed in admin.py', ...['Ok'])
                 }
             }
         )
@@ -109,7 +109,7 @@ class ${className}Admin(admin.ModelAdmin):
 
     let get_model_class = () => {
         vscode.commands.registerCommand(
-            "sssss", (selectedDirPath => {
+            'sssss', (selectedDirPath => {
                 vscode.commands.executeCommand('copyFilePath')
                 vscode.env.clipboard.readText().then((clipboardText) => {
                     selectedDirPath = clipboardText

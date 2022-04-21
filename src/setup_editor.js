@@ -6,15 +6,15 @@ function setupEditor() {
     let setupEditorForDjangoCommand = () => {
 
         vscode.commands.registerCommand(
-            "django-helper.setup_editor_for_django_project", () => {
+            'django-helper.setup_editor_for_django_project', () => {
 
                 let workspaceFolder = vscode.workspace.workspaceFolders[0].uri.fsPath
-                let extensionPath = vscode.extensions.getExtension("harshil patel.django-helper").extensionPath
+                let extensionPath = vscode.extensions.getExtension('harshil patel.django-helper').extensionPath
 
-                const dotvscodePath = path.join(workspaceFolder, ".vscode")
-                const extensionTemplatesPath = path.join(extensionPath, "templates")
+                const dotvscodePath = path.join(workspaceFolder, '.vscode')
+                const extensionTemplatesPath = path.join(extensionPath, 'templates')
 
-                const EXT_TEMPLATE_FILES = ["tasks.json"]
+                const EXT_TEMPLATE_FILES = ['tasks.json']
 
 
                 //check if workspace folder is opened or not.
@@ -25,12 +25,12 @@ function setupEditor() {
                     */
                     if (!fs.existsSync(dotvscodePath)) {
                         fs.mkdirSync(dotvscodePath)
-                        vscode.window.showInformationMessage(`${dotvscodePath} has been created.`, ...["Ok"])
+                        vscode.window.showInformationMessage(`${dotvscodePath} has been created.`, ...['Ok'])
                     } else {
-                        return vscode.window.showInformationMessage(`${dotvscodePath} already exists.`, ...["Ok"])
+                        return vscode.window.showInformationMessage(`${dotvscodePath} already exists.`, ...['Ok'])
                     }
                 } else {
-                    return vscode.window.showErrorMessage("Please open workspace folder first.", ...["Ok"])
+                    return vscode.window.showErrorMessage('Please open workspace folder first.', ...['Ok'])
                 }
 
                 /*
@@ -44,9 +44,9 @@ function setupEditor() {
 
                     if (!fs.existsSync(vscodeTemplateFilePath)) {
                         fs.copyFileSync(extensionTemplateFilePath, vscodeTemplateFilePath, fs.constants.COPYFILE_EXCL)
-                        vscode.window.showInformationMessage(`${vscodeTemplateFilePath} created.`, ...["Ok"])
+                        vscode.window.showInformationMessage(`${vscodeTemplateFilePath} created.`, ...['Ok'])
                     } else {
-                        return vscode.window.showInformationMessage(`${vscodeTemplateFilePath} already exists.`, ...["Ok"])
+                        return vscode.window.showInformationMessage(`${vscodeTemplateFilePath} already exists.`, ...['Ok'])
                     }
                 })
 
