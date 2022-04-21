@@ -4,10 +4,9 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "setup django project",
-      "category": "Django-Helper",
+      "label": "Django-Helper: setup django project",
       "type": "shell",
-      "command": "${config:python.pythonPath} -m venv env && source env/bin/activate && pip install ${input:django_version} && django-admin startproject ${input:project_name}",
+      "command": "${config:python.defaultInterpreterPath} -m venv env && source env/bin/activate && pip install ${input:django_version} && django-admin startproject ${input:project_name}",
       "when": "isLinux || isMac"
       "presentation": {
         "echo": true,

@@ -13,8 +13,11 @@ function serializers() {
                     let finalPath = path.join(selectedDirPath, 'serializers.py')
 
                     // content
-                    let content = 'file content'
-
+                    let content = 'from rest_framework import serializers'
+                    /* 
+                    regex:
+                        class: /(^class\s+[A-Z]+[a-zA-Z]*)(.*:$)/gm
+                    */
 
                     if (!fs.existsSync(finalPath)) {
                         fs.writeFileSync(finalPath, content, (err) => {
