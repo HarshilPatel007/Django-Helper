@@ -64,6 +64,12 @@
         "title": "Create Serializers",
         "when": "explorerViewletVisible && explorerResourceIsFolder",
         "category": "Django-Helper"
+      },
+      {
+        "command": "test.command",
+        "title": "Get Class",
+        "when": "explorerViewletVisible",
+        "category": "Django-Helper"
       }
     ],
     "menus": {
@@ -95,6 +101,10 @@
         {
           "when": "explorerViewletVisible && explorerResourceIsFolder",
           "command": "django-helper.create_serializers"
+        },
+        {
+          "when": "explorerViewletVisible",
+          "command": "test.command"
         }
       ]
     },
