@@ -61,13 +61,13 @@
       },
       {
         "command": "django-helper.create_serializers",
-        "title": "Create Serializers",
+        "title": "Create serializers",
         "when": "explorerViewletVisible && explorerResourceIsFolder",
         "category": "Django-Helper"
       },
       {
-        "command": "test.command",
-        "title": "Get Class",
+        "command": "get_model_fields.command",
+        "title": "Get model fields",
         "when": "explorerViewletVisible",
         "category": "Django-Helper"
       }
@@ -104,7 +104,7 @@
         },
         {
           "when": "explorerViewletVisible",
-          "command": "test.command"
+          "command": "get_model_fields.command"
         }
       ]
     },
