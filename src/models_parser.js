@@ -10,6 +10,7 @@ function modelsParser() {
 
                 vscode.commands.executeCommand('copyFilePath')
                 vscode.env.clipboard.readText().then((clipboardText) => {
+                    let editor = vscode.window.activeTextEditor
                     let selectedDirPath = clipboardText
                     let modelsFilePath = path.join(selectedDirPath, 'models.py')
                     let pathUri = vscode.Uri.file(modelsFilePath)
@@ -17,27 +18,32 @@ function modelsParser() {
 
                     let modelClass = []
                     let modelFields = []
+                    let modelClassFields = []
 
                     if (fs.existsSync(modelsFilePath)) {
                         exeCmd.then((result) => {
                             result.forEach((elements) => {
                                 if (elements.kind === 4) {
                                     modelClass.push(elements.name)
-                                    // console.log(elements.children)
                                     let fields = elements.children.filter(f => f.kind === 12)
-                                    fields.forEach((f) => {
-                                        let classFields = elements.name + ':' + f.name
-                                        modelFields.push(classFields)
+                                    fields.forEach((field) => {
+                                        let classFields = elements.name + ':' + field.name
+                                        modelClassFields.push(classFields)
                                     })
                                 }
                             })
                             vscode.window.showQuickPick(modelClass).then((selectedCls) => {
-                                modelFields.forEach(fc => {
-                                    if (fc.includes(selectedCls) === true) {
+                                modelClassFields.forEach((classFields) => {
+                                    if (classFields.includes(selectedCls) === true) {
                                         let cls = selectedCls + ':'
-                                        let fields = fc.replace(cls, '')
-                                        console.log(fields)
+                                        let fields = classFields.replace(cls, '')
+                                        fields = '"' + fields + '"'
+                                        modelFields.push(fields)
                                     }
+                                })
+                                let finalModelFields = modelFields.join(',')
+                                editor.edit((e) => {
+                                    e.insert(editor.selection.active, finalModelFields)
                                 })
                             })
                         })
