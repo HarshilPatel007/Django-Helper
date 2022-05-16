@@ -4,7 +4,7 @@ const vscode = require('vscode')
 
 function serializers() {
 
-    let createSerializersFile = () => {
+    function createSerializersFile() {
         vscode.commands.registerCommand(
             'django-helper.create_serializers', (selectedDirPath => {
                 vscode.commands.executeCommand('copyFilePath')
@@ -17,7 +17,8 @@ function serializers() {
 
                     if (!fs.existsSync(serializersPath)) {
                         fs.writeFileSync(serializersPath, content, (err) => {
-                            if (err) throw vscode.window.showErrorMessage(err, ...['Ok'])
+                            if (err)
+                                throw vscode.window.showErrorMessage(err, ...['Ok'])
                         })
                         vscode.window.showInformationMessage('serializers.py has been created.', ...['Ok'])
                     } else {
@@ -28,7 +29,9 @@ function serializers() {
         )
     } // create_serializers_file
 
-    createSerializersFile()
+    return {
+        createSerializersFile: createSerializersFile
+    }
 
 } // serializers
 

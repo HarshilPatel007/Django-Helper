@@ -3,7 +3,8 @@ const path = require('path')
 const vscode = require('vscode')
 
 function setupEditor() {
-    let setupEditorForDjangoCommand = () => {
+
+    function setupEditorForDjango() {
 
         vscode.commands.registerCommand(
             'django-helper.setup_editor_for_django_project', () => {
@@ -52,9 +53,11 @@ function setupEditor() {
 
             })
 
-    } // setup_editor_for_django_command
+    } // setup_editor_for_django
 
-    setupEditorForDjangoCommand()
+    return {
+        setupEditorForDjango: setupEditorForDjango
+    }
 
 } // setupEditor
 

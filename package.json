@@ -66,8 +66,8 @@
         "category": "Django-Helper"
       },
       {
-        "command": "get_model_fields.command",
-        "title": "Get model fields",
+        "command": "django-helper.insert_model_fields",
+        "title": "Insert model fields",
         "when": "explorerViewletVisible",
         "category": "Django-Helper"
       }
@@ -104,7 +104,7 @@
         },
         {
           "when": "explorerViewletVisible",
-          "command": "get_model_fields.command"
+          "command": "django-helper.insert_model_fields"
         }
       ]
     },

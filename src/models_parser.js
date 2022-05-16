@@ -4,9 +4,9 @@ const vscode = require('vscode')
 
 function modelsParser() {
 
-    let getModelFields = () => {
+    function insertModelFields() {
         vscode.commands.registerCommand(
-            'get_model_fields.command', async () => {
+            'django-helper.insert_model_fields', async () => {
 
                 vscode.commands.executeCommand('copyFilePath')
                 vscode.env.clipboard.readText().then((clipboardText) => {
@@ -52,9 +52,11 @@ function modelsParser() {
                     }
                 })
             })
-    } // get_model_fields
+    } // insert_model_fields
 
-    getModelFields()
+    return {
+        insertModelFields: insertModelFields
+    }
 
 } // models_parser
 

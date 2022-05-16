@@ -1,23 +1,23 @@
-const fs = require('fs')
-const path = require('path')
 const vscode = require('vscode')
 
-function adminModel() {
-    let isAdminFile = () => {
+function adminModels() {
+
+    function isAdminFile() {
         let currentFilePath = vscode.window.activeTextEditor.document.fileName
         currentFilePath = currentFilePath.split('/')
         currentFilePath = currentFilePath[currentFilePath.length - 1]
-        if (currentFilePath === 'admin.py') return true
+        if (currentFilePath === 'admin.py')
+            return true
     }
 
-    let hasModelsImports = (fileText) => {
+    function hasModelsImports(fileText) {
         let searchImport = new RegExp(`(?:^|\w*)from .models import(?:$|\w*)`)
         if (searchImport.test(fileText) === true) {
             return true
         }
     }
 
-    let registerModels = (className) => {
+    function registerModels(className) {
         let code = `
 @admin.register(${className})
 class ${className}Admin(admin.ModelAdmin):
@@ -29,7 +29,7 @@ class ${className}Admin(admin.ModelAdmin):
         return code
     }
 
-    let registerAllModelsCommand = () => {
+    function registerAllModels() {
 
         vscode.commands.registerCommand(
             'django-helper.admin_register_all_models', () => {
@@ -63,9 +63,9 @@ class ${className}Admin(admin.ModelAdmin):
                 }
             }
         )
-    } // register_all_models_command
+    } // register_all_models
 
-    let registerSelectedModelsCommand = () => {
+    function registerSelectedModels() {
 
         vscode.commands.registerCommand(
             'django-helper.admin_register_selected_models', () => {
@@ -104,13 +104,16 @@ class ${className}Admin(admin.ModelAdmin):
                 }
             }
         )
-    } // register_selected_models_command
+    } // register_selected_models
 
-    registerAllModelsCommand()
-    registerSelectedModelsCommand()
 
-} // adminModel
+    return {
+        registerAllModels: registerAllModels,
+        registerSelectedModels: registerSelectedModels
+    }
+
+} // adminModels
 
 module.exports = {
-    adminModel: adminModel
+    adminModels: adminModels
 }

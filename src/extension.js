@@ -1,21 +1,33 @@
-const setupEditor = require('./setup_editor')
-const adminModelFields = require('./admin_models')
-const serializers = require('./serializers')
-const modelsParser = require('./models_parser')
+const { setupEditor } = require('./setup_editor')
+const { adminModels } = require('./admin_models')
+const { serializers } = require('./serializers')
+const { modelsParser } = require('./models_parser')
 
-/**
- * @param {vscode.ExtensionContext} context
- */
+
+function setup() {
+
+	setupEditor().setupEditorForDjango()
+
+
+	let adminModel = adminModels()
+	adminModel.registerAllModels()
+	adminModel.registerSelectedModels()
+
+
+	serializers().createSerializersFile()
+	modelsParser().insertModelFields()
+
+}
+
 function activate(context) {
 
 	console.log('Congratulations, extension "django-helper" is now activated!')
 
-	let djangoHelper = () => console.log('')
+	function djangoHelper() {
+		return console.log('')
+	}
 
-	setupEditor.setupEditor()
-	adminModelFields.adminModel()
-	serializers.serializers()
-	modelsParser.modelsParser()
+	setup()
 
 	context.subscriptions.push(djangoHelper)
 }
