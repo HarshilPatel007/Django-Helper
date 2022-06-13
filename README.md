@@ -4,41 +4,28 @@
 
 ## Features
 
-- Setup Editor for Django Project.
+- Setup Django project
+- Register selected models
+- Register all models
+- Insert selected model fields
 
-  - `ctrl+shift+p` to open command pallete.
-  - type `setup editor for django project` and hit enter.
-  - this'll setup the Django tasks and other configuration for the extension.
-
-- Django Tasks.
-
-  - `Django: setup django project`
-    - this'll setup the django project.
-
-- Register all models in `admin.py`
-- Register selected model in `admin.py`
+> Please see [wiki](https://github.com/HarshilPatel007/Django-Helper/wiki) page for detailed documentation
 
 ## Requirements
 
-- none.
+- none
 
 ## Extension Settings
 
-- none.
+- none
 
 ## Known Issues
 
-- `setup django project` task is only supported in Linux & MacOS. Not tested in the Windows.
+- `setup django project` **task** is only supported in Linux & MacOS. Not tested in the Windows.
 
 ## Release Notes
 
-### 0.0.1
-
-- Initial release.
-
-### 0.0.2
-
-- Remove unnessesory files and change README.
+- Please see [CHANGELOG.md](https://github.com/HarshilPatel007/Django-Helper/blob/master/CHANGELOG.md) for the release information
 
 ---
 
